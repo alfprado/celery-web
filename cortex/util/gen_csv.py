@@ -1,7 +1,7 @@
 import time
 import pandas as pd
 
-def create_file(content):
-    timestr = time.strftime("%Y%m%d-%H%M%S")
+def create_file(id_task, content):
+    timestr = time.strftime("%Y%m%d")
     df = pd.DataFrame(content)
-    df.to_csv(f'{timestr}.csv',index=False)
+    df.to_csv(f'{id_task}-{timestr}.csv',index=False)

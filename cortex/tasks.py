@@ -6,7 +6,7 @@ import requests
 @celery_app.task(bind=True)
 def process_result(self, content):
     if content is not None:
-        create_file(content)
+        create_file(self.request.id, content)
         return 'SUCCESS'
     return 'ERROR'
 
@@ -25,4 +25,7 @@ def get_ibge(self, tabela, periodo, variavel, nivel):
 
     if response.status_code == 200:
         return response.json()
-    
+
+@celery_app.task()
+def call_api_schedule():
+    ...
