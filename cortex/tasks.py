@@ -3,7 +3,9 @@ from util.util import create_file, read_db
 from requests.exceptions import RequestException
 from celery import chain
 import requests
+import os
 
+ENDPOINT='http://api.sidra.ibge.gov.br'
 
 @celery_app.task(
     bind=True,)
@@ -20,7 +22,7 @@ def process_result(self, content):
     autoretry_for=(RequestException,)
     )
 def get_ibge(self, tabela, periodo, variavel, nivel):
-    response = requests.get(f'http://api.sidra.ibge.gov.br/values/t/{tabela}/p/{periodo}/v/{variavel}/{nivel}/all')
+    response = requests.get(f'{ENDPOINT}/values/t/{tabela}/p/{periodo}/v/{variavel}/{nivel}/all')
     
     if not response.ok:
         raise ValueError(response.text)

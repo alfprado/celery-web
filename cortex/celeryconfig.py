@@ -1,8 +1,12 @@
-from datetime import timedelta
+from celery.schedules import crontab
 
-CELERYBEAT_SCHEDULE = {
+broker='pyamqp://guest@localhost//',
+backend='rpc://',
+include=['tasks']
+
+beat_schedule = {
     'every-5-seconds': {
         'task': 'tasks.call_api_schedule',
-        'schedule': timedelta(seconds=5),
+        'schedule': crontab('*', '*', '*', '*', '*')
     },
 }
