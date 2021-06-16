@@ -4,11 +4,3 @@ services:
     image: rabbitmq:latest
     ports:
       - "5672:5672"
-  db:
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=cortex_db
