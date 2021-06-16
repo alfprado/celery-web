@@ -1,9 +1,12 @@
 from worker import celery_app
-from util.gen_csv import create_file
+from util.util import create_file, read_db
 from requests.exceptions import RequestException
+from celery import chain
 import requests
 
-@celery_app.task(bind=True)
+
+@celery_app.task(
+    bind=True,)
 def process_result(self, content):
     if content is not None:
         create_file(self.request.id, content)
@@ -12,7 +15,6 @@ def process_result(self, content):
 
 @celery_app.task(
     bind=True,
-    name='call_ibge',
     max_retry=5,
     retry_backoff=True,
     autoretry_for=(RequestException,)
@@ -28,4 +30,8 @@ def get_ibge(self, tabela, periodo, variavel, nivel):
 
 @celery_app.task()
 def call_api_schedule():
-    ...
+    for item in read_db():
+        item = item.split(',')
+        chain(
+            get_ibge.s(item[0], item[1], item[2], item[3]),
+            process_result.s(),)()
