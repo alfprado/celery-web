@@ -52,4 +52,21 @@ Método |   Url              |	Parâmetros                      |Função
 |GET   |/result/{task_id}   |task_id                          |Verifica o status da tarefa na fila
 
 
+Ao chamar uma requisição no endpoint "/" é gerado um arquivo .csv dentro da pasta util/output.
+
+## Scheduler
+
+Dentro da pasta util existe um arquivo chamado database.csv, ele contém os parâmetros para requisições a partir do cron job, a expressão pode ser configurada no arquivo **celeryconfig** na função **crontab()**:
+
 ```
+beat_schedule = {
+    'every-5-seconds': {
+        'task': 'tasks.call_api_schedule',
+        'schedule': crontab('*', '*', '*', '*', '*')
+    },
+}
+```
+O sistema consiste de uma API rest implementada utilizando o framework FastAPI, que envia uma mensagem para um broker RabbitMQ que disponibiliza os dados para os celery work, esses fazem uma requisição na API do IBGE e caso tenha um retorno positivo é persistido em um arquivo .csv. O publicador pode ser gerado pelo celery beat por cron job.
+
+
+
