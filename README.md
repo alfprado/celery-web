@@ -66,7 +66,9 @@ beat_schedule = {
     },
 }
 ```
-O sistema consiste de uma API rest implementada utilizando o framework FastAPI, que envia uma mensagem para um broker RabbitMQ que disponibiliza os dados para os celery work, esses fazem uma requisição na API do IBGE e caso tenha um retorno positivo é persistido em um arquivo .csv. O publicador pode ser gerado pelo celery beat por cron job.
 
+## Database
 
+as chamadas geradas pelo cron job são baseadas em parâmetros cadastrados previamente no arquivo **database.csv** localizado na pasta util.
 
+O sistema consiste de uma API rest implementada utilizando o framework FastAPI, que envia uma mensagem para um broker RabbitMQ que disponibiliza os dados para os celery work, onde faz uma requisição na API do IBGE e caso tenha um retorno positivo é persistido, o resultado é persistido em um arquivo .csv. O publicador pode ser gerado pelo celery beat por cron job.
