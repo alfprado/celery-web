@@ -7,6 +7,8 @@ Instalação
 
 ```$ git clone git@github.com:alfprado/teste-cortex.git```
 
+```$ cd teste-cortex```
+
 ### Inicializa o docker RabbitMQ
 ```$ docker-compose up -d```
 
