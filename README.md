@@ -1,4 +1,4 @@
-# Cortex
+# Celery-web
 
 * Celery [documentação](https://docs.celeryproject.org/en/stable/index.html)
 * [Flower](https://flower.readthedocs.io/en/latest/) - Ferramenta de monitoramento
